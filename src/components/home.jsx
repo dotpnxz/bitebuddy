@@ -46,51 +46,63 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-full text-center">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full text-center">
       {showIntro && (
-        <p className="text-2xl font-semibold text-gray-700 max-w-lg relative left-[45rem]">
-          From breakfast to dinner, Italian to Thai, keto to vegan—BiteBuddy finds
-          meals that match your taste and lifestyle!
-        </p>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <p className="text-2xl font-semibold text-gray-700 max-w-lg text-center">
+            From breakfast to dinner, Italian to Thai, keto to vegan—BiteBuddy finds
+            meals that match your taste and lifestyle!
+          </p>
+        </div>
       )}
 
-      <div className="absolute bottom-[5rem] left-1/2 transform -translate-x-1/2 w-[50rem]">
+      <div className="absolute bottom-[2rem] left-1/2 transform -translate-x-1/2 w-full max-w-[30rem] sm:max-w-[40rem] md:max-w-[50rem]">
         <input
           type="text"
           placeholder="Ask anything..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyPress={handleKeyPress}
-          className="w-full px-6 py-4 text-lg text-gray-500 bg-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="w-full px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg text-gray-500 bg-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
       </div>
 
-      {loading && <p className="text-gray-600 mt-4 relative left-[45rem]">Fetching recipes...</p>}
+      {loading && (
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <p className="text-gray-600 text-center">Fetching recipes...</p>
+        </div>
+      )}
       
       {error && (
-        <p className="text-red-500 mt-4 relative left-[45rem]">
-          {error} <br />
-          Need ideas? Try searching for <strong>"Italian"</strong> or <strong>"chicken recipes"</strong>.
-        </p>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <p className="text-red-500 text-center max-w-[30rem] sm:max-w-[40rem] md:max-w-[50rem]">
+            {error} <br />
+            Need ideas? Try searching for <strong>"Italian"</strong> or <strong>"chicken recipes"</strong>.
+          </p>
+        </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-[5rem] max-w-6xl">
-        {recipes.map((recipe, index) => (
-          <div key={index} className="bg-white p-3 rounded-lg shadow-lg max-w-[40rem] text-sm max-h-[35rem] overflow-y-auto relative left-[25rem]">
-            <h2 className="text-lg font-bold">{recipe.title}</h2>
-            {recipe.image && <img src={recipe.image} alt={recipe.title} className="w-full rounded-lg mt-2" />}
-            <p className="text-gray-700 mt-1"><strong>Cuisine:</strong> {recipe.cuisine.join(", ")}</p>
-            <h3 className="font-semibold mt-2">Ingredients:</h3>
-            <ul className="list-disc list-inside text-gray-600">
-              {recipe.ingredients.map((ingredient, idx) => (
-                <li key={idx}>{ingredient}</li>
-              ))}
-            </ul>
-            <h3 className="font-semibold mt-2">Instructions:</h3>
-            <p className="text-gray-600">{recipe.instructions}</p>
+      {!error && recipes.length > 0 && (
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 justify-items-center">
+            {recipes.map((recipe, index) => (
+              <div key={index} className="bg-white p-3 sm:p-4 rounded-lg shadow-lg w-full max-w-[25rem] text-sm max-h-[30rem] overflow-y-auto">
+                <h2 className="text-base sm:text-lg font-bold">{recipe.title}</h2>
+                {recipe.image && <img src={recipe.image} alt={recipe.title} className="w-full rounded-lg mt-2" />}
+                <p className="text-gray-700 mt-1 text-sm"><strong>Cuisine:</strong> {recipe.cuisine.join(", ")}</p>
+                <h3 className="font-semibold mt-2 text-sm">Ingredients:</h3>
+                <ul className="list-disc list-inside text-gray-600 text-sm">
+                  {recipe.ingredients.map((ingredient, idx) => (
+                    <li key={idx}>{ingredient}</li>
+                  ))}
+                </ul>
+                <h3 className="font-semibold mt-2 text-sm">Instructions:</h3>
+                <p className="text-gray-600 text-sm">{recipe.instructions}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
