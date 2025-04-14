@@ -7,13 +7,19 @@ CORS(app)  # Allow frontend to communicate with backend
 
 SPOONACULAR_API_KEY = "10d19486498046239b9ea7dcb0c7a252"
 
+@app.route('/')
+def index():
+    return "Welcome to the Recipe API!"  # Or any other content you want to display
+
 @app.route('/search', methods=['GET'])
 def search_recipe():
     query = request.args.get('query')
     if not query:
         return jsonify({"error": "Query parameter is required"}), 400
 
-    s
+    # Add the 'number' parameter to limit the initial search results
+    search_url = f"https://api.spoonacular.com/recipes/complexSearch?query={query}&number=3&apiKey={SPOONACULAR_API_KEY}"
+    search_response = requests.get(search_url)
 
     # Print response for debugging
     print("Search API Response Code:", search_response.status_code)
