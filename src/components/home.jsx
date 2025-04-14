@@ -32,7 +32,7 @@ const Home = () => {
       setError(
         err.message.includes("No matching recipes")
           ? "No matching recipes found. Try more general terms like 'pasta' or 'salad'."
-          : "Something went wrong. Check your internet connection or try again later."
+          : "No matching recipes."
       );
     } finally {
       setLoading(false);

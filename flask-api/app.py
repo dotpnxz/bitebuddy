@@ -13,8 +13,7 @@ def search_recipe():
     if not query:
         return jsonify({"error": "Query parameter is required"}), 400
 
-    search_url = f"https://api.spoonacular.com/recipes/complexSearch?query={query}&number=3&apiKey={SPOONACULAR_API_KEY}"
-    search_response = requests.get(search_url)
+    s
 
     # Print response for debugging
     print("Search API Response Code:", search_response.status_code)
